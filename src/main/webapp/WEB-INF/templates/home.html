@@ -5,7 +5,18 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<link rel="stylesheet"  type="text/css" th:href="@{/css/aaa.css}" />
+<style type="text/css">
+
+.card {
+	width:300px;
+	padding:10px;
+	padding-bottom: 10px;
+	margin:10px;
+	display: inline-block;
+	word-break: break-all;
+}
+</style>
+
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -31,14 +42,17 @@
 		</div>
 	</div>
 
-	<form action="#" th:action="@{/user/addNote}" th:object="${note}" method="post"  role="form">
-			<input type="text" th:field="*{title}" /><br />
-			<input type="text" th:field="*{description}" /><br /> 
-			<input type="submit" class="btn" th:value="submit" />
+	<form action="#" th:action="@{/user/addNote}" th:object="${note}"
+				method="post" role="form">
+				<input type="text" th:field="*{title}" /><br /> <input type="text"
+					th:field="*{description}" /><br /> <input type="submit"
+					class="btn" th:value="submit" />
 	</form>
 
-	<div class="aaa">
-		<div th:each="note : ${allNotes}">
+	
+	<div>
+		<h3>All Notes</h3>
+		<div th:each="note : ${allNotes}" id="card">
 		 	<div th:text="${note.title}"></div>
 		 	<div th:text="${note.description}"></div>
 		</div>
@@ -46,3 +60,4 @@
 
 </body>
 </html>
+

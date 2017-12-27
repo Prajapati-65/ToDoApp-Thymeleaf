@@ -43,28 +43,6 @@ public class Note {
 	@Column(name = "MODIFIED_DATE")
 	private Date modifiedDate;
 
-	@Column(name = "PIN")
-	private String pin;
-
-	@Column(name = "ARCHIVE_STATUS")
-	private String archiveStatus;
-
-	@Column(name = "DELETE_STATUS")
-	private String deleteStatus;
-
-	@Column(name = "REMINDER_STATUS")
-	private String reminderStatus;
-
-	@Column(name = "NOTE_STATUS")
-	private String noteStatus;
-
-	@Column(name = "NOTE_COLOR")
-	private String noteColor;
-
-	@Lob
-	@Column(name = "IMAGE", columnDefinition = "LONGBLOB")
-	private String image;
-
 	@ManyToOne()
 	@JsonIgnore
 	@JoinColumn(name = "USER_ID")
@@ -108,62 +86,6 @@ public class Note {
 
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
-	}
-
-	public String getPin() {
-		return pin;
-	}
-
-	public void setPin(String pin) {
-		this.pin = pin;
-	}
-
-	public String getArchiveStatus() {
-		return archiveStatus;
-	}
-
-	public void setArchiveStatus(String archiveStatus) {
-		this.archiveStatus = archiveStatus;
-	}
-
-	public String getDeleteStatus() {
-		return deleteStatus;
-	}
-
-	public void setDeleteStatus(String deleteStatus) {
-		this.deleteStatus = deleteStatus;
-	}
-
-	public String getReminderStatus() {
-		return reminderStatus;
-	}
-
-	public void setReminderStatus(String reminderStatus) {
-		this.reminderStatus = reminderStatus;
-	}
-
-	public String getNoteStatus() {
-		return noteStatus;
-	}
-
-	public void setNoteStatus(String noteStatus) {
-		this.noteStatus = noteStatus;
-	}
-
-	public String getNoteColor() {
-		return noteColor;
-	}
-
-	public void setNoteColor(String noteColor) {
-		this.noteColor = noteColor;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
 	}
 
 	public User getUser() {

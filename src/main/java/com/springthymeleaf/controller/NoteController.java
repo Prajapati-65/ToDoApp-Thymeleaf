@@ -45,6 +45,8 @@ public class NoteController {
 		modelAndView.setViewName("home");
 		modelAndView.addObject("user",user);
 		modelAndView.addObject("note",note);
+		List<Note> allNotes =noteService.getAllNotes(user);
+		modelAndView.addObject("allNotes", allNotes);
 		return modelAndView;
 	}
 	

@@ -6,7 +6,7 @@ import com.springthymeleaf.model.User;
 
 public interface UserDao {
 
-	void saveUser(User user);
+	int saveUser(User user);
 	
 	public User loginUser(User user);
 	

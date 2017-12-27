@@ -2,6 +2,7 @@ package com.springthymeleaf.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Service;
 import com.springthymeleaf.dao.UserDao;
 import com.springthymeleaf.model.User;
 import com.springthymeleaf.utility.Encryption;
+import com.springthymeleaf.utility.UrlTemplate;
+import com.springthymeleaf.utility.jms.JmsMessageSendingServiceImplement;
+import com.springthymeleaf.utility.token.GenerateJWT;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,6 +29,25 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(pwd);
 		userDao.saveUser(user);
 	}
+
+	
+	public void saveUser(User user, HttpServletRequest request) {
+
+		String pwd = encryption.encryptPassword(user.getPassword());
+		user.setPassword(pwd);
+		int userID = userDao.saveUser(user);
+		if (userID != 0) {
+			String activeToken = GenerateJWT.generate(userID);
+			
+			String url = UrlTemplate.urlTemplate(request);
+			url = url + "verifyMail/" + activeToken;
+			JmsMessageSendingServiceImplement jmsMessageSendingService = new JmsMessageSendingServiceImplement();
+			
+			jmsMessageSendingService.sendMessage(user.getEmail(), "Please click on this link within 1-hours otherwise your account is not activated--> " + url);
+		}
+	}
+	
+	
 
 	public int loginUser(User user) {
 		User loggedInUser = userDao.loginUser(user);
@@ -59,4 +82,5 @@ public class UserServiceImpl implements UserService {
 	public List<User> getUserEmailId() {
 		return userDao.getUserEmailId();
 	}
+
 }

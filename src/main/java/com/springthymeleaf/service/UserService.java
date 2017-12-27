@@ -8,6 +8,8 @@ import com.springthymeleaf.model.User;
 
 public interface UserService {
 
+	public void saveUser(User user , HttpServletRequest request);
+	
 	public void saveUser(User user);
 	
 	public int loginUser(User user);

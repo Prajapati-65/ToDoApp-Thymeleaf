@@ -22,18 +22,20 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	Encryption encryption;
 	
-	public void saveUser(User user) {
+	public int saveUser(User user) {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			session.save(user);
+			int id = (int) session.save(user);
+			return id;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			transaction.commit();
 			session.close();
 		}
+		return 0;
 	}
 
 	public User loginUser(User user) {
