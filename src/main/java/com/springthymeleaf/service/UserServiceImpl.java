@@ -27,9 +27,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public int loginUser(User user) {
-
-		User loggedInUser = userDao.emailValidation(user.getEmail());
-
+		User loggedInUser = userDao.loginUser(user);
+		
 		if (loggedInUser == null) {
 			return 0;
 		}

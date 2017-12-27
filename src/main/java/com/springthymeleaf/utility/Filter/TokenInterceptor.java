@@ -2,6 +2,7 @@ package com.springthymeleaf.utility.Filter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,10 +37,11 @@ public class TokenInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
 		
-		int userId = VerifiedJWT.verify(request.getHeader("token"));
+		HttpSession session = request.getSession(false);
+		session.getAttribute("user");
+		int userId = VerifiedJWT.verify(session.getAttribute("user")+"");
 		if (userId == 0) {
 			response.setStatus(511);
-			
 			return false;
 		}
 		request.setAttribute("userId", userId);

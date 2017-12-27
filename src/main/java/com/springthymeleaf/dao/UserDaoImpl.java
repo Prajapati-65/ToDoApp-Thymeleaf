@@ -28,7 +28,6 @@ public class UserDaoImpl implements UserDao {
 		try {
 			transaction = session.beginTransaction();
 			session.save(user);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

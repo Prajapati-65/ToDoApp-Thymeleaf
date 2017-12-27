@@ -1,27 +1,48 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-
 <head>
-<title>Admin Page</title>
-<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
+<link rel="stylesheet"  type="text/css" th:href="@{/css/aaa.css}" />
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title>ToDo</title>
+</head>
 <body>
-	<div class="container">    
-		
-		<div class="panel-group" style="margin-top:40px">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<span th:text="${userName}"></span>
-				</div>
-				<p class="admin-message-text text-center" th:text="${adminMessage}"></p>
+	<div th:fragment="navbar" class="navbar navbar-static-top"
+		style="background-color: #ffbb33">
+		<div class="navbar-inner">
+			<div class="container">
+				<div th:text="${user.firstName}"></div>
+				<div th:text="${user.email}"></div>
+
+				<button type="button" class="btn " style="float: right">
+					<li class=""><a href="#" th:href="@{/logout}">Logout</a></li>
+				</button>
 			</div>
 		</div>
-		
 	</div>
+
+	<form action="#" th:action="@{/user/addNote}" th:object="${note}" method="post"  role="form">
+			<input type="text" th:field="*{title}" /><br />
+			<input type="text" th:field="*{description}" /><br /> 
+			<input type="submit" class="btn" th:value="submit" />
+	</form>
+
+	<div class="aaa">
+		<div th:each="note : ${allNotes}">
+		 	<div th:text="${note.title}"></div>
+		 	<div th:text="${note.description}"></div>
+		</div>
+	</div>
+
 </body>
 </html>
