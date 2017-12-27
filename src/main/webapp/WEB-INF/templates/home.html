@@ -7,12 +7,13 @@
 
 <style type="text/css">
 
-.card {
+#card {
 	width:300px;
 	padding:10px;
 	padding-bottom: 10px;
 	margin:10px;
 	display: inline-block;
+	background-color:#fff333;
 	word-break: break-all;
 }
 </style>
@@ -42,22 +43,30 @@
 		</div>
 	</div>
 
-	<form action="#" th:action="@{/user/addNote}" th:object="${note}"
-				method="post" role="form">
-				<input type="text" th:field="*{title}" /><br /> <input type="text"
-					th:field="*{description}" /><br /> <input type="submit"
-					class="btn" th:value="submit" />
-	</form>
-
-	
-	<div>
-		<h3>All Notes</h3>
-		<div th:each="note : ${allNotes}" id="card">
-		 	<div th:text="${note.title}"></div>
-		 	<div th:text="${note.description}"></div>
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Add new Note</h4>
 		</div>
-	</div>
+		<div class="modal-body">
 
+			<form action="#" th:action="@{/user/addNote}" th:object="${note}"
+			method="post" role="form">
+			<input type="text" th:field="*{title}" /><br /> <input type="text"
+				th:field="*{description}" /><br /> <input type="submit"
+				 th:value="submit" />
+		</form>
+		</div>
+		</div>
+
+		<div>
+			<h3>All Notes</h3>
+			<div th:each="note : ${allNotes}" id="card">
+				<div th:text="${note.title}"></div>
+				<div th:text="${note.description}"></div>
+			</div>
+		</div>
+		
 </body>
 </html>
 
