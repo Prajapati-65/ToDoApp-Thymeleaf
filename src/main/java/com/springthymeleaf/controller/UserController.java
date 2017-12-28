@@ -3,6 +3,7 @@ package com.springthymeleaf.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/loginUser", method = RequestMethod.POST)
-	public ModelAndView loginUser(User user, HttpSession session ,HttpServletRequest request) {
+	public ModelAndView loginUser(User user, HttpSession session ,HttpServletRequest request , HttpServletResponse response) {
 		ModelMap modelMap = new ModelMap();
 		int userId = userService.loginUser(user);
 		ModelAndView modelAndView = new ModelAndView();
@@ -65,11 +66,15 @@ public class UserController {
 			User user1 = userService.getUserById(userId);
 			Note note = new Note();
 			session.setAttribute("user", jwt);
+			
+			request.setAttribute("token", jwt);
+			
 			modelMap.put("user", user1);
 			modelAndView.setViewName("home");
 			modelAndView.addObject("user", user1);
 			modelAndView.addObject("note", note);
-			
+			modelAndView.addObject("token", jwt);
+			System.out.println("jwt: " + jwt);
 			List<Note> allNotes = noteService.getAllNotes(user1);
 			modelAndView.addObject("allNotes", allNotes);
 			return modelAndView;

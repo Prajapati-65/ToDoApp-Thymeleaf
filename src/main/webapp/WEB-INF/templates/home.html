@@ -18,7 +18,9 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>ToDo</title>
 </head>
-<body>
+<body onload="saveToken()">
+
+<input  id="jwt" th:value="${token}" />
 	
 		<div th:fragment="navbar" class="navbar navbar-fixed-top" style="background-color: #ffbb33">
 			<div class="row">
@@ -38,8 +40,8 @@
 				</div>
 			</div>
 		</div>
-		
-		
+	
+<!-- 		
 <div class="container">
 	<div class="row">
 		<div class="col-12">
@@ -53,10 +55,7 @@
 		</div>
 	</div>
 </div>
-		
-		
-		
-		
+		 -->
 		
 	
 		<br /><br /><br /><br /><br />
@@ -72,10 +71,10 @@
 										</div>
 										<div class="modal-body">
 											<form action="#" th:action="@{/user/addNote}" th:object="${note}"
-												method="post" role="form">
-											<input type="text" th:field="*{title}" /><br /> <input type="text"
-												th:field="*{description}" /><br /> <input type="submit"
-												 th:value="submit" />
+													method="post" role="form">
+												<input type="text" th:field="*{title}" /><br /> <input type="text"
+													th:field="*{description}" /><br /> <input type="submit" class="btn"
+													 th:value="submit" />
 											</form>
 										</div>
 									</div>
@@ -94,15 +93,15 @@
 									<div th:text="${note.description}"></div><br />
 									<div>
 										<span class="glyphicon glyphicon-picture btn"></span>
-										<span class="glyphicon glyphicon-trash btn"></span>
+										<span class="glyphicon glyphicon-trash btn" th:onclick="'deleteNote('+ *{note.noteId} +')'"></span>
 										<span class="glyphicon glyphicon-edit btn"></span>
 									</div>
 								</div>
+								
 							</div>
 					</div>
 				</div>
 			</div>
-		
 		
 </body>
 </html>

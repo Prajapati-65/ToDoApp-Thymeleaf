@@ -36,10 +36,12 @@ public class TokenInterceptor implements HandlerInterceptor {
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
-		
+	
 		HttpSession session = request.getSession(false);
 		session.getAttribute("user");
 		int userId = VerifiedJWT.verify(session.getAttribute("user")+"");
+		
+		//int userId = VerifiedJWT.verify(request.getHeader("token"));
 		if (userId == 0) {
 			response.setStatus(511);
 			return false;
