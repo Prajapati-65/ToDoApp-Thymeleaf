@@ -5,23 +5,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<style type="text/css">
-
-#card {
-	width:300px;
-	padding:10px;
-	padding-bottom: 10px;
-	margin:10px;
-	display: inline-block;
-	background-color:#fff333;
-	word-break: break-all;
-}
-</style>
-
+<link th:href="@{/css/home.css}" href="/css/home.css"  rel="stylesheet" type="text/css"  />
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-	
+
+<script type="text/javascript" th:inline="javascript" th:src="@{/js/scriptFile.js}"></script>
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
@@ -29,43 +19,90 @@
 <title>ToDo</title>
 </head>
 <body>
-	<div th:fragment="navbar" class="navbar navbar-static-top"
-		style="background-color: #ffbb33">
-		<div class="navbar-inner">
-			<div class="container">
-				<div th:text="${user.firstName}"></div>
-				<div th:text="${user.email}"></div>
-
-				<button type="button" class="btn " style="float: right">
-					<li class=""><a href="#" th:href="@{/logout}">Logout</a></li>
-				</button>
+	
+		<div th:fragment="navbar" class="navbar navbar-fixed-top" style="background-color: #ffbb33">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="navbar-inner">
+					
+							<span onclick="toogleNav()" class="glyphicon glyphicon-align-justify"></span>
+							<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+								<div th:text="${user.firstName}"></div>
+								<div th:text="${user.email}"></div>
+							</div>
+				
+							<button type="button" style="float: right">
+								<a href="#" th:href="@{/logout}">Logout</a>
+							</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<div class="sideNav" id="sideNavContent">
+				
+				
+					
+					
+					
 			</div>
 		</div>
 	</div>
-
-	<div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-			<h4 class="modal-title">Add new Note</h4>
-		</div>
-		<div class="modal-body">
-
-			<form action="#" th:action="@{/user/addNote}" th:object="${note}"
-			method="post" role="form">
-			<input type="text" th:field="*{title}" /><br /> <input type="text"
-				th:field="*{description}" /><br /> <input type="submit"
-				 th:value="submit" />
-		</form>
-		</div>
-		</div>
-
-		<div>
-			<h3>All Notes</h3>
-			<div th:each="note : ${allNotes}" id="card">
-				<div th:text="${note.title}"></div>
-				<div th:text="${note.description}"></div>
+</div>
+		
+		
+		
+		
+		
+	
+		<br /><br /><br /><br /><br />
+		
+			<div class="container" id="marginLeft">
+						<button type="button" data-toggle="modal" data-target="#myModal">Add-Note</button>
+							<div class="modal fade" id="myModal" role="dialog">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+											<h4 class="modal-title">Add new Note</h4>
+										</div>
+										<div class="modal-body">
+											<form action="#" th:action="@{/user/addNote}" th:object="${note}"
+												method="post" role="form">
+											<input type="text" th:field="*{title}" /><br /> <input type="text"
+												th:field="*{description}" /><br /> <input type="submit"
+												 th:value="submit" />
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div>	
+		
+			
+			<div class="container" id="noteContainer"> 
+				<div class="row">
+						<div class="col-12-xs col-12-sm col-12-md col-12-lg">
+							<div>
+								<h3>All Notes</h3>
+								<div th:each="note : ${allNotes}" id="card">
+									<div th:text="${note.title}"></div><br />
+									<div th:text="${note.description}"></div><br />
+									<div>
+										<span class="glyphicon glyphicon-picture btn"></span>
+										<span class="glyphicon glyphicon-trash btn"></span>
+										<span class="glyphicon glyphicon-edit btn"></span>
+									</div>
+								</div>
+							</div>
+					</div>
+				</div>
 			</div>
-		</div>
+		
 		
 </body>
 </html>
