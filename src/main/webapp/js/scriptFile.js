@@ -25,20 +25,18 @@ function closeNav() {
 }
 
 function deleteNote(noteId) {
-	alert("2");
-	console.log("id : " + noteId)
+	console.log("note id is :- " + noteId)
 	$.ajax({
 		type : 'DELETE',
 		url : "delete/" + noteId
 	});
 }
 
+
 function saveToken() {
-	alert("3");
 	var token =  $('#jwt').val();
 	console.log(token);
 	if(token != null){
-		alert("5");
 	localStorage.setItem('token', token);
 	}
 }

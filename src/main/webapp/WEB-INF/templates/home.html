@@ -29,8 +29,7 @@
 					
 							<span onclick="toogleNav()" class="glyphicon glyphicon-align-justify"></span>
 							<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-								<div th:text="${user.firstName}"></div>
-								<div th:text="${user.email}"></div>
+							
 							</div>
 				
 							<button type="button" style="float: right">
@@ -69,13 +68,19 @@
 											<button type="button" class="close" data-dismiss="modal">&times;</button>
 											<h4 class="modal-title">Add new Note</h4>
 										</div>
+										
 										<div class="modal-body">
+										
 											<form action="#" th:action="@{/user/addNote}" th:object="${note}"
 													method="post" role="form">
-												<input type="text" th:field="*{title}" /><br /> <input type="text"
-													th:field="*{description}" /><br /> <input type="submit" class="btn"
-													 th:value="submit" />
+												<input type="text" th:field="*{title}" /><br />
+												
+												<input type="text" th:field="*{description}" /><br /> 
+												<input type="submit" class="btn" th:value="submit" />
+												
 											</form>
+											
+											
 										</div>
 									</div>
 								</div>

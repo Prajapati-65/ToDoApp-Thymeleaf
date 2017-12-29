@@ -54,7 +54,7 @@ public class UserController {
 
 	@RequestMapping(value = "/loginUser", method = RequestMethod.POST)
 	public ModelAndView loginUser(User user, HttpSession session ,HttpServletRequest request , HttpServletResponse response) {
-		ModelMap modelMap = new ModelMap();
+		//ModelMap modelMap = new ModelMap();
 		int userId = userService.loginUser(user);
 		ModelAndView modelAndView = new ModelAndView();
 		if (userId == 0) {
@@ -64,17 +64,20 @@ public class UserController {
 		}else {
 			String jwt = GenerateJWT.generate(userId);
 			User user1 = userService.getUserById(userId);
-			Note note = new Note();
+			
 			session.setAttribute("user", jwt);
 			
 			request.setAttribute("token", jwt);
 			
-			modelMap.put("user", user1);
+			//modelMap.put("user", user1);
 			modelAndView.setViewName("home");
 			modelAndView.addObject("user", user1);
+			
+			Note note = new Note();
 			modelAndView.addObject("note", note);
 			modelAndView.addObject("token", jwt);
 			System.out.println("jwt: " + jwt);
+			
 			List<Note> allNotes = noteService.getAllNotes(user1);
 			modelAndView.addObject("allNotes", allNotes);
 			return modelAndView;
