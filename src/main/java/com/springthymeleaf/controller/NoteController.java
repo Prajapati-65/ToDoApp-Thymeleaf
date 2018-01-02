@@ -76,30 +76,22 @@ public class NoteController {
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ModelAndView deleteNote(@PathVariable("id") int noteId ,HttpServletRequest request) {
 		
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("home");
 		int id = (int) request.getAttribute("userId");
 		User user = userService.getUserById(id);
 		
 		Note note = new Note();
-		modelAndView.addObject("note",note);
-		
 		note.setNoteId(noteId);
 		note.setUser(user);
 		
 		boolean delete = noteService.deleteNote(note);
 		
 		if (delete != true) {
-			modelAndView.addObject("user",user);
-			modelAndView.addObject("note",note);
-			List<Note> allNotes =noteService.getAllNotes(user);
-			modelAndView.addObject("allNotes", allNotes);
-			return modelAndView;
+			
+			return new ModelAndView("redirect:/user/home");
+			
 		} else {
 		
-			List<Note> allNotes =noteService.getAllNotes(user);
-			modelAndView.addObject("allNotes", allNotes);
-			return modelAndView;
+			return new ModelAndView("redirect:/");
 		}
 	}
 	

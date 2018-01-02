@@ -13,10 +13,10 @@ function toogleNav() {
 function openNav() {
 
 	if (screen.width > 1000) {
-		document.getElementById("sideNavContent").style.width = "250px";
-		document.getElementById("noteContainer").style.marginLeft = "300px";
+		document.getElementById("sideNavContent").style.width = "300px";
+		document.getElementById("noteContainer").style.marginLeft = "250px";
 	} else
-		document.getElementById("sideNavContent").style.width = "250px";
+		document.getElementById("sideNavContent").style.width = "300px";
 }
 
 function closeNav() {
