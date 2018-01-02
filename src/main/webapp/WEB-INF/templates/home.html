@@ -20,27 +20,28 @@
 </head>
 <body onload="saveToken()">
 
-<input  id="jwt" th:value="${token}" />
-	
+<input  id="jwt" th:value="${token}" /> 
+
 		<div th:fragment="navbar" class="navbar navbar-fixed-top" style="background-color: #ffbb33">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="navbar-inner">
-					
-							<span onclick="toogleNav()" class="glyphicon glyphicon-align-justify"></span>
-							<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-							
-							</div>
-				
-							<button type="button" style="float: right">
-								<a href="#" th:href="@{/logout}">Logout</a>
-							</button>
+						
+						  <a class="navbar-brand" onclick="toogleNav()">
+							<span style="font-size: 25px; margin-left: 50%; cursor: pointer">&#9776;</span>
+ 						  </a>
+   						  <a class="navbar-brand">Google Keep</a>
+   						 
+						  <button class="navbar-brand" type="button" style="float: right">
+							<a href="#" th:href="@{/logout}">Logout</a>
+						  </button>
 					</div>
 				</div>
 			</div>
 		</div>
+		 
 	
-<!-- 		
+		
 <div class="container">
 	<div class="row">
 		<div class="col-12">
@@ -54,7 +55,7 @@
 		</div>
 	</div>
 </div>
-		 -->
+		
 		
 	
 		<br /><br /><br /><br /><br />
@@ -84,7 +85,7 @@
 										</div>
 									</div>
 								</div>
-							</div>
+						</div>
 					</div>	
 		
 			
@@ -96,10 +97,36 @@
 								<div th:each="note : ${allNotes}" id="card">
 									<div th:text="${note.title}"></div><br />
 									<div th:text="${note.description}"></div><br />
-									<div>
-										<span class="glyphicon glyphicon-picture btn"></span>
+									<div>									
 										<span class="glyphicon glyphicon-trash btn" th:onclick="'deleteNote('+ *{note.noteId} +')'"></span>
-										<span class="glyphicon glyphicon-edit btn"></span>
+										<span class="glyphicon glyphicon-edit btn" data-toggle="modal" data-target="#myModal1"></span>
+										
+								
+										
+											<div class="modal fade" id="myModal1" role="dialog">
+												<div class="modal-dialog">
+							
+												
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal">&times;</button>
+															<h4 class="modal-title" >Edit Note</h4>
+														</div>
+														<div class="modal-body">
+															<form action="#" th:action="@{/update}" th:object="${note}" method="POST">
+															
+																<input type="text"  th:field="*{title}" th:attr="value = ${note.title}" th:name="name" th:id="name"/><br /> 
+																<input type="text"  th:field="*{description}" th:attr="value = ${note.description}" th:name="description" th:id="description"/><br /> <input
+																	type="submit" th:value="submit" />
+															</form>	
+														</div>
+													</div>
+							
+												</div>
+											</div>
+										
+										
+										
 									</div>
 								</div>
 								

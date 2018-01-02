@@ -1,9 +1,7 @@
 package com.springthymeleaf.controller;
 
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.springthymeleaf.model.Note;
 import com.springthymeleaf.model.User;
 import com.springthymeleaf.service.NoteService;
 import com.springthymeleaf.service.UserService;
@@ -53,37 +50,19 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/loginUser", method = RequestMethod.POST)
-	public ModelAndView loginUser(User user, HttpSession session ,HttpServletRequest request , HttpServletResponse response) {
-		//ModelMap modelMap = new ModelMap();
+	public ModelAndView loginUser(User user, HttpSession session ,HttpServletRequest request) {
 		int userId = userService.loginUser(user);
-		ModelAndView modelAndView = new ModelAndView();
-		if (userId == 0) {
-			modelAndView.addObject("user", user);
-			modelAndView.setViewName("login");
-			return modelAndView;
-		}else {
+		if (userId != 0) {
 			String jwt = GenerateJWT.generate(userId);
-			User user1 = userService.getUserById(userId);
-			
 			session.setAttribute("user", jwt);
-			
 			request.setAttribute("token", jwt);
-			
-			//modelMap.put("user", user1);
-			modelAndView.setViewName("home");
-			modelAndView.addObject("user", user1);
-			
-			Note note = new Note();
-			modelAndView.addObject("note", note);
-			modelAndView.addObject("token", jwt);
-			System.out.println("jwt: " + jwt);
-			
-			List<Note> allNotes = noteService.getAllNotes(user1);
-			modelAndView.addObject("allNotes", allNotes);
-			return modelAndView;
+			return new ModelAndView("redirect:/user/home");
+		}
+		else {
+			return new ModelAndView("redirect:/loginUser");
 		}
 	}
-
+	
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) {
