@@ -1,11 +1,13 @@
 package com.springthymeleaf.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.springthymeleaf.model.Collaborater;
 import com.springthymeleaf.model.Note;
 import com.springthymeleaf.model.User;
 import com.springthymeleaf.service.NoteService;
 import com.springthymeleaf.service.UserService;
+import com.springthymeleaf.utility.token.VerifiedJWT;
 
 /**
  * @author Om Prajapati
@@ -97,27 +101,24 @@ public class NoteController {
 	
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public ModelAndView update(@RequestBody Note note) {
-
-		ModelAndView modelAndView = new ModelAndView("redirect:/user/home");
+	public ModelAndView update(Note note , HttpServletRequest request) {
+		int userId = (int) request.getAttribute("userId");
+		User user = userService.getUserById(userId);
 		
-		int noteid = note.getNoteId();
-
-		Note noteById = noteService.getNoteById(noteid);
-
+		ModelAndView modelAndView = new ModelAndView("redirect:/user/home");
+	/*	
+		Note noteById = noteService.getNoteById(note.getNoteId());
 		Date createDate = noteById.getCreatedDate();
 		note.setCreatedDate(createDate);
-
-		User user = noteById.getUser();
-		note.setUser(user);
-
 		Date modifiedDate = new Date();
 		note.setModifiedDate(modifiedDate);
+		*/
+		note.setUser(user);
 		
 		boolean isUpdated = noteService.updateNote(note);
 
 		if (isUpdated != true) {
-
+			modelAndView.addObject("note", new Note());
 			return modelAndView;
 			
 		} else {
@@ -126,50 +127,170 @@ public class NoteController {
 		}
 	}
 	
-	
-	
-/**	
-	
-	@RequestMapping(value="/edit/{id}",method = RequestMethod.GET)
-	public ModelAndView editNote(@PathVariable int id,HttpSession session) {
-		User noteUser=(User) session.getAttribute("user");
-		Note currentNote = noteService.getNoteById(id);
-		session.setAttribute("createTime", currentNote.getCreatedDate());
-		ModelAndView modelAndView=new ModelAndView();
-		modelAndView.setViewName("noteEdit");
-		modelAndView.addObject("note",currentNote);
-		return modelAndView;
-	}
-	
-	@RequestMapping(value="/update",method = RequestMethod.POST)
-	public ModelAndView update(Note note,HttpSession session)
-	{
-		User user=(User) session.getAttribute("user");
+	@RequestMapping(value="/other/{opp}/{id}",method = RequestMethod.GET)
+	public String otherFunction(@PathVariable("opp") int opp, @PathVariable("id") int id , HttpServletRequest request) {
+		
+		int usetId = (int) request.getAttribute("userId");
+		User user = userService.getUserById(usetId);
+		Note note=noteService.getNoteById(id);
 		note.setUser(user);
 		Date date=new Date();
 		note.setModifiedDate(date);
-		Note currentNote=noteService.getNoteById(note.getNoteId());
-		ModelAndView modelAndView=new ModelAndView();
-		if(currentNote!=null) {
-			Date date1=(Date) session.getAttribute("createTime");
-			note.setCreatedDate(date1);
+		if(opp==1) {
+			note.setArchiveStatus("true");
+		}else if(opp==2) {
+			note.setArchiveStatus("false");
 			noteService.updateNote(note);
+			return "redirect:/Archive";
+		}else if(opp==3){
+			note.setTrashStatus("true");
+		}else if(opp==4) {
+			note.setTrashStatus("false");
+			noteService.updateNote(note);
+			return "redirect:/Trash";
+		}else if(opp==5) {
+			
 		}
-		
-		modelAndView.addObject("user1",user);
-		List<Note> notes=noteService.getAllNotes(user);
-		modelAndView.addObject("notes",notes);
-		modelAndView.addObject("note",note);
-		System.out.println(modelAndView.getViewName());
-		System.out.println("DDD ->"+modelAndView.wasCleared());
-		modelAndView.setViewName("home");
-		System.out.println(modelAndView.getViewName());
-		
-		return modelAndView;
+		noteService.updateNote(note);
+		return "redirect:/home";
 		
 	}
 	
-**/
+	@RequestMapping(value="/copy/{id}",method = RequestMethod.GET)
+	public String makeCopy(@PathVariable int id,HttpServletRequest request) {
+		Note copyNote = noteService.getNoteById(id);
+		
+		int userId = (int) request.getAttribute("userId");
+		User noteUser=userService.getUserById(userId);
+		
+		Date date = new Date();
+		copyNote.setCreatedDate(date);
+		copyNote.setModifiedDate(date);
+		copyNote.setUser(noteUser);
+		
+		noteService.createNote(copyNote);
+		return "redirect:/home";
+	}
 	
+	@RequestMapping("/Archive")
+	public ModelAndView archivePage(HttpServletRequest request) {
+		int userId = (int) request.getAttribute("userId");
+		
+		User noteUser=userService.getUserById(userId);
+		ModelAndView modelAndView=new ModelAndView();
+		modelAndView.addObject("user1",noteUser);
+		List<Note> note=noteService.getAllNotes(noteUser);
+		
+		modelAndView.addObject("note",note);
+		return modelAndView;
+	}
+	
+	@RequestMapping("/Trash")
+	public ModelAndView trashPage(HttpServletRequest request) {
+		int userId = (int) request.getAttribute("userId");
+
+		User noteUser=userService.getUserById(userId);
+		ModelAndView modelAndView=new ModelAndView();
+		modelAndView.addObject("user",noteUser);
+		List<Note> notes=noteService.getAllNotes(noteUser);
+		modelAndView.addObject("note",notes);
+		return modelAndView;
+	}
+	
+	
+	
+	@RequestMapping(value = "/collaborate", method = RequestMethod.POST)
+	public ResponseEntity<List<User>> getNotes(@RequestBody Collaborater collborator, HttpServletRequest request) {
+		List<User> userList = new ArrayList<User>();
+
+		Collaborater collaborate = new Collaborater();
+
+		Note note = (Note) collborator.getNoteId();
+		User shareUser = (User) collborator.getShareId();
+		User owner = (User) collborator.getOwnerId();
+
+		shareUser = userService.emailValidate(shareUser.getEmail());
+
+		String accessToken = request.getHeader("token");
+
+		User user = userService.getUserById(VerifiedJWT.verify(accessToken));
+
+		userList = noteService.getListOfUser(note.getNoteId());
+
+		if (user != null) {
+			if (shareUser != null && shareUser.getId() != owner.getId()) {
+				int i = 0;
+				int variable = 0;
+				while (userList.size() > i) {
+					if (userList.get(i).getId() == shareUser.getId()) {
+						variable = 1;
+					}
+					i++;
+				}
+				if (variable == 0) {
+					collaborate.setNoteId(note);
+					collaborate.setOwnerId(owner);
+					collaborate.setShareId(shareUser);
+					if (noteService.saveCollborator(collaborate) > 0) {
+						userList.add(shareUser);
+					} else {
+						ResponseEntity.ok(userList);
+					}
+				}
+			}
+		}
+		return ResponseEntity.ok(userList);
+	}
+
+	
+	@RequestMapping(value = "/getOwner", method = RequestMethod.POST)
+	public ResponseEntity<User> getOwner(@RequestBody Note note, HttpServletRequest request) {
+
+		String accessToken = request.getHeader("token");
+
+		User user = userService.getUserById(VerifiedJWT.verify(accessToken));
+
+		if (user != null) {
+			Note noteComplete = noteService.getNoteById(note.getNoteId());
+			User owner = noteComplete.getUser();
+			return ResponseEntity.ok(owner);
+		} else {
+			return ResponseEntity.ok(null);
+		}
+	}
+
+	
+	@RequestMapping(value = "/removeCollborator", method = RequestMethod.POST)
+	public ModelAndView removeCollborator(@RequestBody Collaborater collborator, HttpServletRequest request) {
+
+		ModelAndView modelAndView = new ModelAndView();
+		int shareWith = collborator.getShareId().getId();
+		int noteId = collborator.getNoteId().getNoteId();
+		Note note = noteService.getNoteById(noteId);
+
+		User owner = note.getUser();
+		String token = request.getHeader("token");
+
+		User user = userService.getUserById(VerifiedJWT.verify(token));
+		if (user != null) {
+			if (owner.getId() != shareWith) {
+				if (noteService.removeCollborator(shareWith, noteId) > 0) {
+					
+					return modelAndView;
+
+				} else {
+					
+					return modelAndView;
+				}
+			} else {
+				
+				return modelAndView;
+			}
+		}
+
+		else {
+			return modelAndView;
+		}
+	}
 	
 }

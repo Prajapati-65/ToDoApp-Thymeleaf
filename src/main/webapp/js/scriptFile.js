@@ -40,6 +40,8 @@ function saveToken() {
 	}
 }
 
+
+/*
 function openNoteModel() {
 	$.ajax({
 		type : 'POST',
@@ -51,7 +53,7 @@ function openNoteModel() {
 			
 	});
 }
-
+*/
 
 
 

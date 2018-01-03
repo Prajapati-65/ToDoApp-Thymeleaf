@@ -2,6 +2,7 @@ package com.springthymeleaf.dao;
 
 import java.util.List;
 
+import com.springthymeleaf.model.Collaborater;
 import com.springthymeleaf.model.Note;
 import com.springthymeleaf.model.User;
 
@@ -40,6 +41,30 @@ public interface NoteDao {
 	 */
 	List<Note> getAllNotes(User user);
 
+	/**
+	 * @param Collborator object
+	 * @return integer
+	 */
+	public int saveCollborator(Collaborater collborate);
+	
+	/**
+	 * @param integer  noteId
+	 * @return List of User
+	 */
+	public List<User> getListOfUser(int noteId);
+	
+	/**
+	 * @param integer userId
+	 * @return List of Note
+	 */
+	public List<Note> getCollboratedNotes(int userId);
+	
+	/**
+	 * @param integer shareWith
+	 * @param integer noteId
+	 * @return integer
+	 */
+	public int removeCollborator(int shareWith,int noteId);
 	
 	
 }

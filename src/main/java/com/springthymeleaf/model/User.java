@@ -46,11 +46,13 @@ public class User {
 	@Column(name = "PROFILE_IMAGE", columnDefinition = "LONGBLOB")
 	private String profileImage;
 	
-	
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Set<Note> note = new HashSet<Note>();
 
+	
+	
+	
 	public Set<Note> getNote() {
 		return note;
 	}

@@ -55,6 +55,9 @@ public class Note {
 	@Column(name = "NOTE_COLOR")
 	private String noteColor;
 
+	@Column(name = "TRASH_STATUS")
+	private String trashStatus;
+	
 	@Lob
 	@Column(name = "IMAGE", columnDefinition = "LONGBLOB")
 	private String image;
@@ -63,6 +66,16 @@ public class Note {
 	@JsonIgnore
 	@JoinColumn(name = "USER_ID")
 	private User user;
+
+	
+	
+	public String getTrashStatus() {
+		return trashStatus;
+	}
+
+	public void setTrashStatus(String trashStatus) {
+		this.trashStatus = trashStatus;
+	}
 
 	public int getNoteId() {
 		return noteId;
