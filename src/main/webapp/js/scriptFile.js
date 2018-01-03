@@ -32,11 +32,26 @@ function deleteNote(noteId) {
 	});
 }
 
-
 function saveToken() {
-	var token =  $('#jwt').val();
+	var token = $('#jwt').val();
 	console.log(token);
-	if(token != null){
-	localStorage.setItem('token', token);
+	if (token != null) {
+		localStorage.setItem('token', token);
 	}
 }
+
+function openNoteModel() {
+	$.ajax({
+		type : 'POST',
+		url : "update",
+		success : function(data) {
+			$("#noteModalHolder").html(data);
+			$("#noteModal").modal("show");
+		}
+			
+	});
+}
+
+
+
+

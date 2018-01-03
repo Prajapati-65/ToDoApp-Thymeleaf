@@ -39,18 +39,20 @@
 				</div>
 			</div>
 		</div>
-		 
-	
-		
+
 <div class="container">
 	<div class="row">
-		<div class="col-12">
+		<div class="col-12 sidebar-nav">
 			<div class="sideNav" id="sideNavContent">
+				<ul class="nav nav-list">
+					 <li class="nav-header"></li>
 				
-				
-					
-					
-					
+					<li><a>Notes</a></li>
+					<li><a>Reminder</a></li>
+					<li><a>Trash</a></li>
+					<li><a>Archive</a></li>
+					<li><a>Activity Log</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -102,48 +104,45 @@
 						<div class="col-12-xs col-12-sm col-12-md col-12-lg">
 							<div style="margin-left: 120px;">
 								<h3>All Notes</h3>
-								<div th:each="note : ${allNotes}" id="card">
-									<div th:text="${note.title}"></div><br />
-									<div th:text="${note.description}"></div><br />
-									<div>									
-										<span class="glyphicon glyphicon-trash btn" th:onclick="'deleteNote('+ *{note.noteId} +')'"></span>
+							
 									
-										<span class="glyphicon glyphicon-edit btn" data-toggle="modal" data-target="#myModal1"></span>
+									<div th:each="note : ${allNotes}" id="card">
 										
+										<div th:text="${note.title}"></div><br />
+										<div th:text="${note.description}"></div><br />
 										
-										
-											<div class="modal fade" id="myModal1" role="dialog">
-												<div class="modal-dialog">
-							
-												
-													<div class="modal-content">
-														<div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal">&times;</button>
-															<h4 class="modal-title" >Edit Note</h4>
-														</div>
-														<div class="modal-body">
-															<form action="#" th:action="@{/update}" th:object="${note}" method="POST">
-															
-																<input type="text"  th:field="*{title}" th:attr="value = ${note.title}" th:name="name" th:id="name"/><br /> 
-																<input type="text"  th:field="*{description}" th:attr="value = ${note.description}" th:name="description" th:id="description"/><br /> <input
-																	type="submit" th:value="submit" />
-															</form>	
-														</div>
-													</div>
-							
-												</div>
-											</div>
-										
-										
-										
+										<div>
+											<span class="btn"> 
+							 					<img th:src="@{/image/reminder.svg}" height="18px" /> 
+											</span>
+											
+											<span class="btn"> 
+							 					<img th:src="@{/image/colaburator.png}" height="23px" /> 
+											</span>
+											
+											<span class="btn"> 
+							 					<img th:src="@{/image/colorpallete.svg}" height="20px" /> 
+											</span>
+											
+											<span class="btn"> 
+							 					<img th:src="@{/image/image.svg}" height="18px" /> 
+											</span>
+											
+											<span class="btn"> 
+							 					<img th:src="@{/image/archive.svg}" th:onclick="'deleteNote('+ *{note.noteId} +')'" height="18px" /> 
+											</span>
+											
+											<span class="btn"> 
+							 					<img th:src="@{/image/more-vert.svg}" height="18px" /> 
+											</span>
+											
+										</div>
 									</div>
 								</div>
-								
 							</div>
 					</div>
 				</div>
-			</div>
-		
+			
 </body>
 </html>
 

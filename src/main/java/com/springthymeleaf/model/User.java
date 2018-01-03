@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -41,6 +42,11 @@ public class User {
 	@Column(name = "PASSWORD")
 	private String password;
 
+	@Lob
+	@Column(name = "PROFILE_IMAGE", columnDefinition = "LONGBLOB")
+	private String profileImage;
+	
+	
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Set<Note> note = new HashSet<Note>();

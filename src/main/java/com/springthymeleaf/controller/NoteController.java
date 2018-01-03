@@ -99,8 +99,7 @@ public class NoteController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelAndView update(@RequestBody Note note) {
 
-		ModelAndView modelAndView = new ModelAndView();
-		
+		ModelAndView modelAndView = new ModelAndView("redirect:/user/home");
 		
 		int noteid = note.getNoteId();
 
@@ -122,11 +121,12 @@ public class NoteController {
 			return modelAndView;
 			
 		} else {
-
 			
 			return modelAndView;
 		}
 	}
+	
+	
 	
 /**	
 	

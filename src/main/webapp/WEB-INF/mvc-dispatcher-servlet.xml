@@ -25,6 +25,7 @@
 
 	<mvc:resources location="/css/" mapping="/css/**" />
 	<mvc:resources location="/js/" mapping="/js/**" />
+	<mvc:resources location="/image/" mapping="/image/**" />
 	
 	<bean id="templateResolver"
 		class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
@@ -49,7 +50,7 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 
 		<property name="url"
-			value="jdbc:mysql://localhost:3306/ThymeToDoApp?createDatabaseIfNotExist=true" />
+			value="jdbc:mysql://localhost:3306/ToDoApp_Thymeleaf?createDatabaseIfNotExist=true" />
 
 		<property name="username" value="root" />
 
