@@ -1,6 +1,3 @@
-$('document').ready(function() {
-});
-
 function toogleNav() {
 	var sideNav = document.getElementById("sideNavContent").style.width;
 	if (sideNav == "0px") {
@@ -81,5 +78,19 @@ function fbAsyncSocialShare(note) {
 	});
 };
 
+
+$(document).ready(function () {
+    $('#signup').on('click', function (e) {
+        $("#myModal").modal();
+        $("#myModalBody").text("");
+        $.ajax({
+            url: "signup",
+            cache: false
+        }).done(function (html) {
+            $("#myModalBody").append(html);
+        });
+    })
+    
+});
 
 

@@ -6,6 +6,12 @@
 	display: inline-block;
 	background-color:#ffe6ff;
 	word-break: break-all;
+	transition: box-shadow 0.2s;
+	box-shadow: 2px 2px 1px 1px lightgrey;
+} 
+
+#card:hover {
+	box-shadow: 0 2px 15px rgba(0, 0, 0, 0.30);
 }
 
 #marginLeft{
@@ -32,3 +38,5 @@
 	margin : 20px;
 	max-width: 350px;
 }
+
+

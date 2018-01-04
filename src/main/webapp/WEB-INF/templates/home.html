@@ -63,6 +63,7 @@
 		
 			<div class="container" id="marginLeft">
 						<button type="button" data-toggle="modal" data-target="#myModal">Add-Note</button>
+							
 							<div class="modal fade" id="myModal" role="dialog">
 								<div class="modal-dialog">
 									<div class="modal-content">
@@ -82,7 +83,8 @@
 													    <td><input type="text" th:field="*{title}" /></td>
 													 </tr>
 													 
-													   <tr>     <td>Description : </td>  
+													   <tr>     
+													    <td>Description : </td>  
 													    <td><input type="text" th:field="*{description}" /></td> 
 													   </tr> 
 												</table>
@@ -122,9 +124,12 @@
 							 					<img th:src="@{/image/colorpallete.svg}" height="20px" /> 
 											</span>
 											
-											<span class="btn"> 
-							 					<img th:src="@{/image/image.svg}" height="18px" /> 
+											<span class="btn" data-toggle="modal" data-target="#myModal"> 
+							 					<img th:src="@{/image/image.svg}" height="18px"/> 
 											</span>
+											
+											
+											
 											
 											<span class="btn">
 												<a th:href="${'otherNote/1/' + note.noteId}">
@@ -151,8 +156,28 @@
 								</div>
 							</div>
 						</div>
-					
-	
+<!-- 						
+						<div class="container">
+							<div class="col-md-6">
+							    <div class="form-group">
+							        <label>Upload Image</label>
+							        <div class="input-group">
+							            <span class="input-group-btn">
+							                <span class="btn btn-default btn-file">
+							                    Browse… <input type="file" id="imgInp">
+							                </span>
+							            </span>
+							            <input type="text" class="form-control" readonly>
+							        </div>
+							        <img id='img-upload'/>
+							    </div>
+							</div>
+						</div>
+													
+						
+	 -->
 </body>
 </html>
+
+
 

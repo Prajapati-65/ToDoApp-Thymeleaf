@@ -1,5 +1,9 @@
 package com.springthymeleaf.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,10 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springthymeleaf.model.Collaborater;
 import com.springthymeleaf.model.Note;
@@ -39,6 +47,7 @@ public class NoteController {
 	
 	@RequestMapping(value="/addNote",method = RequestMethod.POST)
 	public ModelAndView addNote(Note note,HttpServletRequest request) {
+		
 		ModelAndView modelAndView=new ModelAndView("redirect:/user/home");
 		modelAndView.addObject("note",note);
 		
@@ -191,7 +200,6 @@ public class NoteController {
 		modelAndView.addObject("allNotes", allNotes);
 		return modelAndView;
 		
-		
 	}
 	
 	@RequestMapping("/trash")
@@ -212,6 +220,34 @@ public class NoteController {
 		return modelAndView;
 	
 	}
+	
+	 private static String UPLOADED_FOLDER = "/home/bridgelabz/Downloads/";
+	 
+	 @PostMapping("/upload") 
+	    public String singleFileUpload(@RequestParam("file") MultipartFile file,
+	                                   RedirectAttributes redirectAttributes) {
+
+	        if (file.isEmpty()) {
+	            redirectAttributes.addFlashAttribute("image", "Please select a file to upload");
+	            return "redirect:/user/home";
+	        }
+
+	        try {
+
+	            byte[] bytes = file.getBytes();
+	            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+	            Files.write(path, bytes);
+
+	            redirectAttributes.addFlashAttribute("image",
+	                    "You successfully uploaded '" + file.getOriginalFilename() + "'");
+
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+
+	        return "redirect:/user/home";
+	    }
+	
 	
 	
 	
@@ -308,5 +344,6 @@ public class NoteController {
 			return modelAndView;
 		}
 	}
+	
 	
 }
