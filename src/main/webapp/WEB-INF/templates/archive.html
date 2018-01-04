@@ -22,7 +22,7 @@
 
 <input  id="jwt" th:value="${token}" /> 
 
-		<div th:fragment="navbar" class="navbar navbar-fixed-top" style="background-color: #39ac73">
+		<div th:fragment="navbar" class="navbar navbar-fixed-top" style="background-color: #669999">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="navbar-inner">
@@ -30,7 +30,7 @@
 						  <a class="navbar-brand" onclick="toogleNav()">
 							<span style="font-size: 25px; margin-left: 50%; cursor: pointer">&#9776;</span>
  						  </a>
-   						  <a class="navbar-brand">Google Keep</a>
+   						  <a class="navbar-brand">Archive </a>
    						 
 						  <button class="navbar-brand" type="button" style="float: right">
 							<a href="#" th:href="@{/logout}">Logout</a>
@@ -40,16 +40,18 @@
 			</div>
 		</div>
 
+
+
 <div class="container">
 	<div class="row">
 		<div class="col-12 sidebar-nav">
 			<div class="sideNav" id="sideNavContent">
 				<ul class="nav nav-list">
 					<li class="nav-header"></li>
-					<li><a>Notes</a></li>
+					<li><a th:href="${'home'}">Notes</a></li>
 					<li><a>Reminder</a></li>
-					<li><a>Trash</a></li>
-					<li><a>Archive</a></li>
+					<li><a th:href="${'trash'}">Trash</a></li>
+					<li><a th:href="${'archive'}">Archive</a></li>
 					<li><a>Activity Log</a></li>
 				</ul>
 			</div>
@@ -103,11 +105,10 @@
 						<div class="col-12-xs col-12-sm col-12-md col-12-lg">
 							<div style="margin-left: 120px;">
 								<h3>All Notes</h3>
-									<div th:each="note : ${allNotes}" id="card" th:if="${note.archiveStatus=='true' && note.trashStatus!='true'}>
-										
-										<div data-toggle="modal" data-target="#myModal1">
+									<div th:each="note : ${allNotes}" id="card" th:if="${note.archiveStatus=='true'}">
 										
 										<div th:text="${note.title}"></div><br />
+										
 										<div th:text="${note.description}"></div><br />
 										
 										<div>
@@ -127,8 +128,10 @@
 							 					<img th:src="@{/image/image.svg}" height="18px" /> 
 											</span>
 											
-											<span class="btn"> 
-							 					<img th:src="@{/image/archive.svg}" th:onclick="'deleteNote('+ *{note.noteId} +')'" height="18px" /> 
+											<span class="btn">
+												<a th:href="${'otherNote/2/' + note.noteId}">
+							 						<img th:src="@{/image/unarchive.png}" height="18px" /> 
+							 					</a>
 											</span>
 											
 											<div class="dropdown inline">
@@ -137,54 +140,21 @@
 												</span>
 												
 												<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-													<li><a>Delete</a></li>
-													<li><a>Make a Copy</a></li>
+													<li><a th:href="${'otherNote/3/' + note.noteId}">Delete note</a></li>
+													<li><a>Add Label</a></li>
+													<li><a th:href="${'copy/' + note.noteId}">Make a Copy</a></li>
 													<li><a>Social Share</a></li>
 												</ul>
 											</div>
 											
-											
 										</div>
 									</div>
-									
+								</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-			
-			
-			<div class="modal fade" id="myModal1" role="dialog">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">Update note</h4>
-							</div>
-							
-							<div class="modal-body">
-							
-								<form action="#" th:action="@{/user/update}" th:object="${note}" method="post" role="form">
-				
-									<table style="width:100%">
-										  
-										  <tr> 
-										  	<td>Title : </td>
-										    <td><input th:text="${note.title}"  th:field="*{title}" /></td>
-										 </tr>
-										 
-										   <tr>     
-										    <td>Description : </td>  
-										    <td><input th:text="${note.description}" th:field="*{description}" /></td> 
-										   </tr> 
-									</table>
-									<input type="submit"  th:value="submit" />
-								</form>
-								
-							</div>
-						</div>
-					</div>
-				</div>
+					
+	
 </body>
 </html>
 

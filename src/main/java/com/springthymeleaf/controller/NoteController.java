@@ -127,37 +127,39 @@ public class NoteController {
 		}
 	}
 	
-	@RequestMapping(value="/other/{opp}/{id}",method = RequestMethod.GET)
-	public String otherFunction(@PathVariable("opp") int opp, @PathVariable("id") int id , HttpServletRequest request) {
-		
+	@RequestMapping(value="/otherNote/{option}/{id}",method = RequestMethod.GET)
+	public ModelAndView otherFunction(@PathVariable("option") int option, @PathVariable("id") int id , HttpServletRequest request) {
 		int usetId = (int) request.getAttribute("userId");
 		User user = userService.getUserById(usetId);
+		
 		Note note=noteService.getNoteById(id);
 		note.setUser(user);
+		
 		Date date=new Date();
 		note.setModifiedDate(date);
-		if(opp==1) {
+		
+		if(option==1) {
 			note.setArchiveStatus("true");
-		}else if(opp==2) {
+		
+		}else if(option==2) {
 			note.setArchiveStatus("false");
 			noteService.updateNote(note);
-			return "redirect:/Archive";
-		}else if(opp==3){
+			return new ModelAndView("redirect:/user/archive");
+		
+		}else if(option==3){
 			note.setTrashStatus("true");
-		}else if(opp==4) {
+	
+		}else if(option==4) {
 			note.setTrashStatus("false");
 			noteService.updateNote(note);
-			return "redirect:/Trash";
-		}else if(opp==5) {
-			
+			return new ModelAndView("redirect:/user/trash");
 		}
 		noteService.updateNote(note);
-		return "redirect:/home";
-		
+		return new ModelAndView("redirect:/user/home");
 	}
 	
 	@RequestMapping(value="/copy/{id}",method = RequestMethod.GET)
-	public String makeCopy(@PathVariable int id,HttpServletRequest request) {
+	public ModelAndView makeCopy(@PathVariable int id,HttpServletRequest request) {
 		Note copyNote = noteService.getNoteById(id);
 		
 		int userId = (int) request.getAttribute("userId");
@@ -169,32 +171,46 @@ public class NoteController {
 		copyNote.setUser(noteUser);
 		
 		noteService.createNote(copyNote);
-		return "redirect:/home";
+		return new ModelAndView("redirect:/user/home");
 	}
 	
-	@RequestMapping("/Archive")
+	@RequestMapping("/archive")
 	public ModelAndView archivePage(HttpServletRequest request) {
 		int userId = (int) request.getAttribute("userId");
-		
 		User noteUser=userService.getUserById(userId);
-		ModelAndView modelAndView=new ModelAndView();
-		modelAndView.addObject("user1",noteUser);
-		List<Note> note=noteService.getAllNotes(noteUser);
 		
-		modelAndView.addObject("note",note);
+		ModelAndView modelAndView = new ModelAndView();
+		
+		modelAndView.setViewName("archive");
+		modelAndView.addObject("user", noteUser);
+		
+		Note note = new Note();
+		modelAndView.addObject("note", note);
+		
+		List<Note> allNotes = noteService.getAllNotes(noteUser);
+		modelAndView.addObject("allNotes", allNotes);
 		return modelAndView;
+		
+		
 	}
 	
-	@RequestMapping("/Trash")
+	@RequestMapping("/trash")
 	public ModelAndView trashPage(HttpServletRequest request) {
 		int userId = (int) request.getAttribute("userId");
-
 		User noteUser=userService.getUserById(userId);
-		ModelAndView modelAndView=new ModelAndView();
-		modelAndView.addObject("user",noteUser);
-		List<Note> notes=noteService.getAllNotes(noteUser);
-		modelAndView.addObject("note",notes);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		
+		modelAndView.setViewName("trash");
+		modelAndView.addObject("user", noteUser);
+		
+		Note note = new Note();
+		modelAndView.addObject("note", note);
+		
+		List<Note> allNotes = noteService.getAllNotes(noteUser);
+		modelAndView.addObject("allNotes", allNotes);
 		return modelAndView;
+	
 	}
 	
 	

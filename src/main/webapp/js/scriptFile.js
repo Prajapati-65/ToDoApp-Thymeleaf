@@ -50,10 +50,36 @@ function openNoteModel() {
 			$("#noteModalHolder").html(data);
 			$("#noteModal").modal("show");
 		}
-			
 	});
 }
 */
+
+function fbAsyncSocialShare(note) {
+	FB.init({
+		appId : '127036578094516',
+		status : true,
+		cookie : true,
+		xfbml : true,
+		version : 'v2.4'
+	});
+
+	FB.ui({
+		method : 'share_open_graph',
+		action_type : 'og.likes',
+		action_properties : JSON.stringify({
+			object : {
+				'og:title' : note.title,
+				'og:description' :note.description
+			}
+		})
+	}, function(response) {
+		if (response && !response.error_message) {
+			alert('Posting completed.');
+		} else {
+			alert('Error while posting');
+		}
+	});
+};
 
 
 
