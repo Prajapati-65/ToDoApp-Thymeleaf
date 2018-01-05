@@ -10,81 +10,49 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
-<body>
-
-<div class="container" id="login-abc">
-	<div class="col-xs-12 col-sm-12 col-md-12">
-				<h1>Sign in</h1>
-				<form autocomplete="off" action="#" th:action="@{/loginUser}"
-					th:object="${user}" method="post" class="form-horizontal"
-					role="form">
-					
-					<div class="form-group">
-						<label class="col-sm-12" for="email"></label> 
-						<input type="text" th:field="*{email}"
-								placeholder="Enter the email" class="form-control" /> 
-					</div>
-
-					<div class="form-group">
-						<label class="col-sm-12" for="password"></label> 
-						<input type="password" th:field="*{password}"
-								placeholder="Enter the password" class="form-control" />
-					</div>
-
-					<div class="form-group">
-						<button type="submit" class="btn btn-primary btn-block">Submit</button>
-					</div>
-					
-					<p>
-						Don't have an account?<a href="#" th:href="@{/registration}">Sign Up</a>
-					</p>
-					
-				</form>
+<body id="login-abc">
+<div class="container">
+	<div class="row">
+    	<form autocomplete="off" action="#" th:action="@{/loginUser}" th:object="${user}" method="post" class="form-signin mg-btm" role="form">
+			<div class="social-box">
+				<div class="row mg-btm">
+	             <div class="col-md-12">
+	                <a th:href="${'facebookConnection'}" class="btn">
+	                  <i class="icon-facebook"></i>    Login with Facebook
+	                </a>
+				</div>
+				</div>
+				<div class="row">
+				<div class="col-md-12">
+	                <a th:href="${'googleConnection'}" class="btn" >
+	                  <i class="icon-google"></i>    Login with Google
+	                </a>
+	            </div>
+	          </div>
 			</div>
-	</div>
-
-
-
-<!-- 
-
-
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-
-				<form autocomplete="off" action="#" th:action="@{/loginUser}"
-					th:object="${user}" method="post" class="form-horizontal"
-					role="form">
-					<h2>Login Form</h2>
-
-
-					<div class="form-group">
-						<div class="col-sm-9">
-							<input type="text" th:field="*{email}"
-								placeholder="Enter the email" class="form-control" />
+		<div class="main">	
+        
+       
+		<input type="text" th:field="*{email}" placeholder="Enter the email" class="form-control" />
+        <input type="password" th:field="*{password}" placeholder="Enter the password" class="form-control" />
+		<br />
+		<button type="submit" class="btn btn-danger" style="padding: 10px;">Login</button>
+		<span class="clearfix"></span>	
+        </div>
+		<div class="login-footer">
+				<div class="row">
+	                  <div class="col-xs-6 col-md-6">
+	                      <div class="left-section">
+							<a th:href="@{/}">Forgot your password?</a>
+							<br />
+							<a th:href="@{/registration}">Sign up now</a>
 						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-9">
-							<input type="password" th:field="*{password}"
-								placeholder="Enter the password" class="form-control" />
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-sm-9">
-							<button type="submit" class="btn btn-primary btn-block">Submit</button>
-						</div>
-					</div>
-
-					Don't have an account? <a href="#" th:href="@{/registration}">Sign
-						up here</a>
-				</form>
-
-			</div>
+	                  </div>
+	             </div>	
 		</div>
+      </form>
 	</div>
- -->
+</div>
+
 </body>
 </html>
-

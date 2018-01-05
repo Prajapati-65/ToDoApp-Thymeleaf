@@ -53,6 +53,15 @@ public class User {
 	
 	
 	
+	
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
+
 	public Set<Note> getNote() {
 		return note;
 	}
