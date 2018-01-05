@@ -2,7 +2,6 @@ package com.springthymeleaf.controller;
 
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +50,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/loginUser", method = RequestMethod.POST)
-	public ModelAndView loginUser(User user, HttpServletResponse response ,HttpServletRequest request) {
+	public ModelAndView loginUser(User user, HttpSession session ,HttpServletRequest request) {
 		int userId = userService.loginUser(user);
 		if (userId != 0) {
 			String jwt = GenerateJWT.generate(userId);

@@ -82,11 +82,11 @@ public class GoogleController {
 
 				String accessToken = GenerateJWT.generate(user.getId());
 				
-				session.setAttribute("todoAppAccessToken", accessToken);
+				session.setAttribute("user", accessToken);
 				return new ModelAndView("redirect:/user/home");
 			} else if (user != null && user.getPassword() == null) {
 				String accessToken = GenerateJWT.generate(user.getId());
-				session.setAttribute("todoAppAccessToken", accessToken);
+				session.setAttribute("user", accessToken);
 				return new ModelAndView("redirect:/user/home");
 			} else {
 				return new ModelAndView("redirect:/");

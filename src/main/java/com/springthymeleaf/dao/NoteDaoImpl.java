@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -22,6 +23,7 @@ import com.springthymeleaf.model.User;
  * @author Om Prajapti
  *
  */
+@Service
 public class NoteDaoImpl implements NoteDao {
 
 	@Autowired

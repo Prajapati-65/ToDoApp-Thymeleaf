@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springthymeleaf.model.User;
@@ -26,7 +27,6 @@ public class FacebookController {
 
 	@Autowired
 	UserService userService;
-
 
 	/**
 	 * @param response
@@ -47,7 +47,7 @@ public class FacebookController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/facebookLogin", method = RequestMethod.GET)
-	public String afterFbLogin(HttpServletRequest request, HttpServletResponse response, HttpSession session)
+	public ModelAndView afterFbLogin(HttpServletRequest request, HttpServletResponse response, HttpSession session)
 			throws IOException {
 
 		String code;
@@ -79,14 +79,14 @@ public class FacebookController {
 			userService.saveUser(user, request);
 
 			String accessToken = GenerateJWT.generate(user.getId());
-			session.setAttribute("todoAppAccessToken", accessToken);
-			return "redirect:/user/home";
+			session.setAttribute("user", accessToken);
+			return new ModelAndView("redirect:/user/home");
 		} else if(user!=null && user.getPassword()==null){
 			String accessToken = GenerateJWT.generate(user.getId());
-			session.setAttribute("todoAppAccessToken", accessToken);
-			return "redirect:/user/home";
+			session.setAttribute("user", accessToken);
+			return new ModelAndView("redirect:/user/home");
 		} else{
-			return "redirect:/";
+			return new ModelAndView("redirect:/");
 		}
 	}
 

@@ -41,7 +41,6 @@ public class TokenInterceptor implements HandlerInterceptor {
 		session.getAttribute("user");
 		int userId = VerifiedJWT.verify(session.getAttribute("user")+"");
 		
-		//int userId = VerifiedJWT.verify(request.getHeader("token"));
 		if (userId == 0) {
 			response.setStatus(511);
 			return false;

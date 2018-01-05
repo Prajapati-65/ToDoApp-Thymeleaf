@@ -3,6 +3,7 @@ package com.springthymeleaf.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.springthymeleaf.dao.NoteDao;
 import com.springthymeleaf.model.Collaborater;
@@ -13,6 +14,7 @@ import com.springthymeleaf.model.User;
  * @author Om Prajapati
  *
  */
+@Service
 public class NoteServiceImpl implements NoteService {
 
 	@Autowired

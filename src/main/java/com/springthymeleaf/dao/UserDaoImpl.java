@@ -9,11 +9,12 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.springthymeleaf.model.User;
 import com.springthymeleaf.utility.Encryption;
 
-
+@Service
 public class UserDaoImpl implements UserDao {
 
 	@Autowired

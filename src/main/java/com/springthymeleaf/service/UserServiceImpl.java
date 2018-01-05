@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springthymeleaf.dao.UserDao;
+import com.springthymeleaf.utility.jms.JmsMessageSendingService;
 import com.springthymeleaf.model.User;
 import com.springthymeleaf.utility.Encryption;
 import com.springthymeleaf.utility.UrlTemplate;
@@ -23,12 +24,29 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	Encryption encryption;
 	
+	@Autowired
+	JmsMessageSendingService jmsMessageSendingService;
+	
 	public void saveUser(User user) {
+		
+		
+		String pwd = encryption.encryptPassword(user.getPassword());
+		user.setPassword(pwd);
+		int userID = userDao.saveUser(user);
+		if (userID != 0) {
+			String activeToken = GenerateJWT.generate(userID);
+			jmsMessageSendingService.sendMessage(user.getEmail(),
+					"Please click on this link within 1-hours otherwise your account is not activated--> " + activeToken);
+		}
+	}
+	
+	
+	/*public void saveUser1(User user) {
 
 		String pwd = encryption.encryptPassword(user.getPassword());
 		user.setPassword(pwd);
 		userDao.saveUser(user);
-	}
+	}*/
 
 	
 	public void saveUser(User user, HttpServletRequest request) {

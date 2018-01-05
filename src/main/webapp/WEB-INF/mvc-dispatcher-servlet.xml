@@ -19,7 +19,7 @@
      http://www.springframework.org/schema/task 
      http://www.springframework.org/schema/task/spring-task-4.1.xsd">
 
-	<context:component-scan base-package="com.springthymeleaf.controller" />
+	<context:component-scan base-package="com.springthymeleaf.*" />
 
 	<mvc:annotation-driven />
 
@@ -87,18 +87,61 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 	
+	<context:property-placeholder location="classpath:email.properties"/>
+	
+	<bean id="mail" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${email.host}" />
+		<property name="port" value="${email.port}" />
+		<property name="username" value="${email.username}" />
+		<property name="password" value="${email.password}" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">${email.auth}</prop>
+				<prop key="mail.smtp.starttls.enable">${email.starttls}</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+	<bean id="mailService" class="com.springthymeleaf.utility.jms.MailServiceImpl">
+		<property name="email" ref="mail" />
+	</bean>
+	
+	
+	<jms:annotation-driven container-factory="jmsListenerContainerFactory" />
+	
+	<!-- Activemq connection factory -->
+	<bean id="amqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<!-- brokerURL -->
+		<constructor-arg index="0" value="tcp://localhost:61616" />
+	
+		<property name="trustAllPackages" value="true" />
+	</bean>
 
-	<bean id="userDao" class="com.springthymeleaf.dao.UserDaoImpl"></bean>
-	
-	<bean id="userService" class="com.springthymeleaf.service.UserServiceImpl"></bean>
-	
-	<bean id="noteDao" class="com.springthymeleaf.dao.NoteDaoImpl"></bean>
-	
-	<bean id="noteService" class="com.springthymeleaf.service.NoteServiceImpl"></bean>
-	
-	<bean id="encryption" class="com.springthymeleaf.utility.Encryption"></bean>
-	
-	
+	<!-- Pooled Spring connection factory -->
+	<bean id="connectionFactory"
+		class="org.springframework.jms.connection.CachingConnectionFactory">
+		<constructor-arg ref="amqConnectionFactory" />
+	</bean>
+
+	<!-- Default Destination Queue Definition -->
+	<bean id="defaultDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<!-- name of the queue -->
+		<constructor-arg index="0" value="MessageStorage" />
+	</bean>
+
+	<!-- JmsTemplate Definition -->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="defaultDestination" ref="defaultDestination" />
+	</bean>
+
+	<!-- JMS receive, define JmsListenerContainerFactory -->
+	<bean id="jmsListenerContainerFactory"
+		class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="concurrency" value="1-1" />
+	</bean>
 	
 
 </beans>
