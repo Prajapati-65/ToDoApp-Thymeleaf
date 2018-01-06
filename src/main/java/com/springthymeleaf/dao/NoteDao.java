@@ -3,6 +3,7 @@ package com.springthymeleaf.dao;
 import java.util.List;
 
 import com.springthymeleaf.model.Collaborater;
+import com.springthymeleaf.model.DocDetails;
 import com.springthymeleaf.model.Note;
 import com.springthymeleaf.model.User;
 
@@ -67,4 +68,7 @@ public interface NoteDao {
 	public int removeCollborator(int shareWith,int noteId);
 	
 	
+	public List<DocDetails> getAllDoc();
+	
+	public DocDetails getDocDetails(int id);
 }

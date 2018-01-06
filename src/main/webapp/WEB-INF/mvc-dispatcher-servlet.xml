@@ -64,6 +64,7 @@
 				<value>com.springthymeleaf.model.User</value>
 				<value>com.springthymeleaf.model.Note</value>
 				<value>com.springthymeleaf.model.Collaborater</value>
+				<value>com.springthymeleaf.model.DocDetails</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

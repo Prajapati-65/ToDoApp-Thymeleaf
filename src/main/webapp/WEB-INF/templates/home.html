@@ -107,7 +107,7 @@
 								<h3>All Notes</h3>
 									<div th:each="note : ${allNotes}" id="card" th:if="${note.archiveStatus!='true' and note.trashStatus!='true'}">
 										
-										<div th:text="${note.title}"></div><br />
+										<div th:text="${note.title}" th:onclick="'parseUrlFilter()'"></div><br />
 										
 										<div th:text="${note.description}"></div><br />
 										
@@ -150,34 +150,19 @@
 												</ul>
 											</div>
 											
+											
 										</div>
 									</div>
 								</div>
 								</div>
 							</div>
 						</div>
-<!-- 						
-						<div class="container">
-							<div class="col-md-6">
-							    <div class="form-group">
-							        <label>Upload Image</label>
-							        <div class="input-group">
-							            <span class="input-group-btn">
-							                <span class="btn btn-default btn-file">
-							                    Browse… <input type="file" id="imgInp">
-							                </span>
-							            </span>
-							            <input type="text" class="form-control" readonly>
-							        </div>
-							        <img id='img-upload'/>
-							    </div>
-							</div>
-						</div>
-													
-						
-	 -->
+
 </body>
 </html>
+
+
+
 
 
 

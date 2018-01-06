@@ -14,6 +14,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
 import com.springthymeleaf.model.Collaborater;
+import com.springthymeleaf.model.DocDetails;
 import com.springthymeleaf.model.Note;
 import com.springthymeleaf.model.User;
 
@@ -139,5 +140,21 @@ public class NoteDaoImpl implements NoteDao {
 		session.close();
 		return status;
 	}
+	
+	public List<DocDetails> getAllDoc(){
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(DocDetails.class);
+		List<DocDetails> docDetails = criteria.list();
+		return docDetails;
+	}
+	
+	public DocDetails getDocDetails(int id) {
+		Session session = sessionFactory.openSession();
+		DocDetails docDetails = session.get(DocDetails.class, id);
+		session.close();
+		return docDetails;
+		
+	}
+	
 	
 }

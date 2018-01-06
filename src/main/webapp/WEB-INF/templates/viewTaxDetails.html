@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<script type="text/javascript" th:inline="javascript" th:src="@{/js/scriptFile.js}"></script>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title>ToDo</title>
+</head>
+<body>
+	<div th:each="taxDetailsById1 : ${taxDetailsById}">
+					<table>
+				
+					<tr>
+						<td th:text="${taxDetailsById1.docName}"></td>
+						<td th:text="${taxDetailsById1.docType}"></td>
+						<td th:text="${taxDetailsById1.docAmount}"></td>
+						<td th:text="${taxDetailsById1.tax}"></td>
+						<td th:text="${taxDetailsById1.taxType}"></td>
+					</tr>
+					</table>
+	</div>
+</body>
+</html>

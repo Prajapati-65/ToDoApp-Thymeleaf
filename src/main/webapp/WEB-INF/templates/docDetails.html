@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<script type="text/javascript" th:inline="javascript" th:src="@{/js/scriptFile.js}"></script>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title>ToDo</title>
+</head>
+<body>
+	<div class="col-4">
+		<table class="table">
+			
+				<thead>
+					<tr>
+						<th scope="col">DocName</th>
+						<th scope="col">DocType</th>
+						<th scope="col">Amount</th>
+						<th scope="col">Tax</th>
+						<th scope="col">TaxType</th>
+						<th scope="col">View</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="doc : ${allDoc}">
+						<td th:text="${doc.docName}"></td>
+						<td th:text="${doc.docType}"></td>
+						<td th:text="${doc.docAmount}"></td>
+						<td th:text="${doc.tax}"></td>
+						<td th:text="${doc.taxType}"></td>
+						<td><button type="button" th:onclick="'viewTax('+ *{doc.docId} +')'" name="submit">View</button></td>
+					</tr>
+				</tbody>
+			
+		</table>
+	</div>
+</body>
+</html>

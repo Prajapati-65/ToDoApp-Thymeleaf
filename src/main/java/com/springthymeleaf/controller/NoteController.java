@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springthymeleaf.model.Collaborater;
+import com.springthymeleaf.model.DocDetails;
 import com.springthymeleaf.model.Note;
 import com.springthymeleaf.model.User;
 import com.springthymeleaf.service.NoteService;
@@ -84,7 +85,30 @@ public class NoteController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value="/docdetails")
+	public ModelAndView docDetails() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("docDetails");
+		List<DocDetails> allDoc = noteService.getAllDoc();
+		modelAndView.addObject("allDoc", allDoc);
+		return modelAndView;
+	}
 	
+	@RequestMapping(value="/viewTax/{id}", method = RequestMethod.GET)
+	public ModelAndView viewTax(@PathVariable("id") int id ,HttpServletRequest request) {
+		
+		ModelAndView modelAndView=new ModelAndView("redirect:/user/home");
+		int userId = (int) request.getAttribute("userId");
+		User user = userService.getUserById(userId);
+		System.out.println("Hello");
+		DocDetails docDetails =  new DocDetails();
+		docDetails.setDocId(id);
+		modelAndView.addObject("user", user);
+		DocDetails taxDetailsById = noteService.getDocDetails(docDetails.getDocId());
+		modelAndView.addObject("taxDetailsById", taxDetailsById);
+		return modelAndView;
+	}
+								
 	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ModelAndView deleteNote(@PathVariable("id") int noteId ,HttpServletRequest request) {
@@ -344,6 +368,7 @@ public class NoteController {
 			return modelAndView;
 		}
 	}
+	
 	
 	
 }

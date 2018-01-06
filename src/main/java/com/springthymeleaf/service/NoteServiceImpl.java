@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.springthymeleaf.dao.NoteDao;
 import com.springthymeleaf.model.Collaborater;
+import com.springthymeleaf.model.DocDetails;
 import com.springthymeleaf.model.Note;
 import com.springthymeleaf.model.User;
 
@@ -70,4 +71,11 @@ public class NoteServiceImpl implements NoteService {
 		return noteDao.removeCollborator(shareWith, noteId);
 	}
 
+	public List<DocDetails> getAllDoc(){
+		return noteDao.getAllDoc();
+	}
+	
+	public DocDetails getDocDetails(int id) {
+		return noteDao.getDocDetails(id);
+	}
 }

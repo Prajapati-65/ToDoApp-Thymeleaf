@@ -29,6 +29,14 @@ function deleteNote(noteId) {
 	});
 }
 
+function viewTax(id) {
+	console.log("all details"+id);
+	$.ajax({
+		type : 'GET',
+		url : "viewTax/" + id
+	});
+}
+
 function saveToken() {
 	var token = $('#jwt').val();
 	console.log(token);
@@ -37,19 +45,16 @@ function saveToken() {
 	}
 }
 
-
-/*
-function openNoteModel() {
+function getUrlData (urlToSend) {
 	$.ajax({
-		type : 'POST',
-		url : "update",
-		success : function(data) {
-			$("#noteModalHolder").html(data);
-			$("#noteModal").modal("show");
+		method : 'POST',
+		url : 'user/getUrlData',
+		headers : {
+			'url' : urlToSend,
+			'token' :  localStorage.getItem('token')
 		}
 	});
 }
-*/
 
 function fbAsyncSocialShare(note) {
 	FB.init({
@@ -77,20 +82,3 @@ function fbAsyncSocialShare(note) {
 		}
 	});
 };
-
-
-$(document).ready(function () {
-    $('#signup').on('click', function (e) {
-        $("#myModal").modal();
-        $("#myModalBody").text("");
-        $.ajax({
-            url: "signup",
-            cache: false
-        }).done(function (html) {
-            $("#myModalBody").append(html);
-        });
-    })
-    
-});
-
-
