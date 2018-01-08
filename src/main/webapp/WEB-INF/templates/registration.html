@@ -3,59 +3,45 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Registration Form</title>
-
+<link th:href="@{/css/home.css}" href="/css/home.css"  rel="stylesheet" type="text/css"  />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body>
 	
-	
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				<form autocomplete="off" action="#" th:action="@{/registerUser}" th:object="${user}" method="post" class="form-horizontal" role="form">
-					<h2>Registration Form</h2>
-					<div class="form-group">
-						<div class="col-sm-9">
-							<input type="text" th:field="*{firstName}" placeholder="Enter first name" class="form-control" />
-						</div>
-					</div>
+<body id="login-abc">
 
-					<div class="form-group">
-						<div class="col-sm-9">
-							<input type="text" th:field="*{lastName}" placeholder="Enter last name" class="form-control" />
+<div class="container">
+	<div class="row">
+		<h2>Registration Form</h2>
+    	<form autocomplete="off" action="#" th:action="@{/registerUser}" th:object="${user}" method="post" class="form-signin mg-btm" role="form">
+			
+			<div class="main">	
+       
+				<input type="text" th:field="*{firstName}" placeholder="Enter first name" class="form-control" />
+		       	<input type="text" th:field="*{lastName}" placeholder="Enter last name" class="form-control" />
+		       	<input type="text" th:field="*{email}" placeholder="Enter the email" class="form-control" />
+		       	<input type="password" th:field="*{password}" placeholder="Enter the password" class="form-control" />
+		       	<input type="text" th:field="*{mobileNumber}" placeholder="Enter the mobile number" class="form-control" />
+				<br />
+				<button type="submit" class="btn btn-danger" style="padding: 10px;">Submit</button>
+				
+				<span class="clearfix"></span>	
+        </div>
+		<div class="login-footer">
+				<div class="row">
+	                  <div class="col-xs-6 col-md-6">
+	                      <div class="left-section">
+							<a th:href="@{/}">Signin</a>
 						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-9">
-							<input type="text" th:field="*{email}" placeholder="Enter the email" class="form-control" />
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-9">
-							<input type="password" th:field="*{password}" placeholder="Enter the password" class="form-control" />
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-							<input type="text" th:field="*{mobileNumber}" placeholder="Enter the mobile number" class="form-control" />
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-sm-9">
-							<button type="submit" class="btn btn-primary btn-block">Submit</button>
-						</div>
-					</div>
-				</form>
-			</div>
+	                  </div>
+	             </div>	
 		</div>
+		
+      </form>
 	</div>
-
-	
+</div>
 
 </body>
 </html>

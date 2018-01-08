@@ -14,12 +14,23 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<style type="text/css"> 
+	 a {
+	   background-color: #80dfff;
+	 }
+	</style>
 <title>ToDo</title>
 </head>
 <body>
-	<h2>View Details </h2>
-	
-	<div th:text="${taxDetailsById}"></div>
-	
+	<div class="col-md-6 col-lg-6">
+		<h3>View Details </h3> 
+		
+		Doc-Name   : <a th:text="${docName}"></a><br />
+		Doc-Type   : <a th:text="${docType}"></a><br />
+		Doc-Amount : <a th:text="${docAmount}"></a><br />
+		Tax        : <a th:text="${tax}"></a><br />
+		Tax-Type   : <a th:text="${taxType}"></a>
+	</div>
 </body>
 </html>

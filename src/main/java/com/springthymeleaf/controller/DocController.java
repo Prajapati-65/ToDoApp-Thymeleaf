@@ -57,9 +57,14 @@ public class DocController {
 		DocDetails docDetails =  new DocDetails();
 		docDetails.setDocId(id);
 		DocDetails taxDetailsById = noteService.getDocDetails(docDetails.getDocId());
-		System.out.println("All DocDetails is : "+taxDetailsById);
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("taxDetailsById", taxDetailsById);
+	
+		modelAndView.addObject("docName", taxDetailsById.getDocName());
+		modelAndView.addObject("docType", taxDetailsById.getDocType());
+		modelAndView.addObject("docAmount", taxDetailsById.getDocAmount());
+		modelAndView.addObject("tax", taxDetailsById.getTax());
+		modelAndView.addObject("taxType", taxDetailsById.getTaxType());
+		
 		modelAndView.setViewName("viewTaxDetails");
 		return modelAndView;
 	}

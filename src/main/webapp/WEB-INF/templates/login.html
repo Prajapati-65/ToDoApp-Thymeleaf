@@ -11,8 +11,10 @@
 </head>
 
 <body id="login-abc">
+
 <div class="container">
 	<div class="row">
+	<h2>Login Form</h2>
     	<form autocomplete="off" action="#" th:action="@{/loginUser}" th:object="${user}" method="post" class="form-signin mg-btm" role="form">
 			<div class="social-box">
 				<div class="row mg-btm">
@@ -31,13 +33,12 @@
 	          </div>
 			</div>
 		<div class="main">	
-        
        
-		<input type="text" th:field="*{email}" placeholder="Enter the email" class="form-control" />
-        <input type="password" th:field="*{password}" placeholder="Enter the password" class="form-control" />
-		<br />
-		<button type="submit" class="btn btn-danger" style="padding: 10px;">Login</button>
-		<span class="clearfix"></span>	
+			<input type="text" th:field="*{email}" placeholder="Enter the email" class="form-control" />
+	        <input type="password" th:field="*{password}" placeholder="Enter the password" class="form-control" />
+			<br />
+			<button type="submit" class="btn btn-danger" style="padding: 10px;">Login</button>
+			<span class="clearfix"></span>	
         </div>
 		<div class="login-footer">
 				<div class="row">
