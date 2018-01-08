@@ -114,9 +114,9 @@
 											<span class="btn dropdown-toggle" id="menu1" data-toggle="dropdown">
 												<img th:src="@{/image/more-vert.svg}" height="18px" /> 
 											</span>
-											
+										<!-- 	th:onclick="'deleteNote('+ *{note.noteId} +')'" -->
 											<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-												<li><a th:onclick="'deleteNote('+ *{note.noteId} +')'">Delete forever</a></li>
+												<li><a th:href="${'delete/' + note.noteId}">Delete forever</a></li>
 												<li><a th:href="${'otherNote/4/' + note.noteId}">Restore</a></li>
 											</ul>
 										</div>

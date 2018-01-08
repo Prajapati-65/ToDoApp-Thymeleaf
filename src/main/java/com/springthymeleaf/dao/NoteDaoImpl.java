@@ -148,6 +148,19 @@ public class NoteDaoImpl implements NoteDao {
 		return docDetails;
 	}
 	
+	public void saveDetails(DocDetails docDetails) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.save(docDetails);
+			transaction.commit();
+			session.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public DocDetails getDocDetails(int id) {
 		Session session = sessionFactory.openSession();
 		DocDetails docDetails = session.get(DocDetails.class, id);

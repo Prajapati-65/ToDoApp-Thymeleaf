@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -85,32 +86,11 @@ public class NoteController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value="/docdetails")
-	public ModelAndView docDetails() {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("docDetails");
-		List<DocDetails> allDoc = noteService.getAllDoc();
-		modelAndView.addObject("allDoc", allDoc);
-		return modelAndView;
-	}
 	
-	@RequestMapping(value="/viewTax/{id}", method = RequestMethod.GET)
-	public ModelAndView viewTax(@PathVariable("id") int id ,HttpServletRequest request) {
-		
-		ModelAndView modelAndView=new ModelAndView("redirect:/user/home");
-		int userId = (int) request.getAttribute("userId");
-		User user = userService.getUserById(userId);
-		System.out.println("Hello");
-		DocDetails docDetails =  new DocDetails();
-		docDetails.setDocId(id);
-		modelAndView.addObject("user", user);
-		DocDetails taxDetailsById = noteService.getDocDetails(docDetails.getDocId());
-		modelAndView.addObject("taxDetailsById", taxDetailsById);
-		return modelAndView;
-	}
+	
 								
 	
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public ModelAndView deleteNote(@PathVariable("id") int noteId ,HttpServletRequest request) {
 		
 		int id = (int) request.getAttribute("userId");
@@ -122,13 +102,13 @@ public class NoteController {
 		
 		boolean delete = noteService.deleteNote(note);
 		
-		if (delete != true) {
+		if (delete == true) {
 			
-			return new ModelAndView("redirect:/user/home");
+			return new ModelAndView("redirect:/user/trash");
 			
 		} else {
 		
-			return new ModelAndView("redirect:/");
+			return new ModelAndView("redirect:/user/home");
 		}
 	}
 	
@@ -139,7 +119,7 @@ public class NoteController {
 		User user = userService.getUserById(userId);
 		
 		ModelAndView modelAndView = new ModelAndView("redirect:/user/home");
-	/*	
+		/*	
 		Note noteById = noteService.getNoteById(note.getNoteId());
 		Date createDate = noteById.getCreatedDate();
 		note.setCreatedDate(createDate);
@@ -244,36 +224,6 @@ public class NoteController {
 		return modelAndView;
 	
 	}
-	
-	 private static String UPLOADED_FOLDER = "/home/bridgelabz/Downloads/";
-	 
-	 @PostMapping("/upload") 
-	    public String singleFileUpload(@RequestParam("file") MultipartFile file,
-	                                   RedirectAttributes redirectAttributes) {
-
-	        if (file.isEmpty()) {
-	            redirectAttributes.addFlashAttribute("image", "Please select a file to upload");
-	            return "redirect:/user/home";
-	        }
-
-	        try {
-
-	            byte[] bytes = file.getBytes();
-	            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
-	            Files.write(path, bytes);
-
-	            redirectAttributes.addFlashAttribute("image",
-	                    "You successfully uploaded '" + file.getOriginalFilename() + "'");
-
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-
-	        return "redirect:/user/home";
-	    }
-	
-	
-	
 	
 	@RequestMapping(value = "/collaborate", method = RequestMethod.POST)
 	public ResponseEntity<List<User>> getNotes(@RequestBody Collaborater collborator, HttpServletRequest request) {

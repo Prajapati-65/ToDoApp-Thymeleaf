@@ -70,5 +70,10 @@ public interface NoteDao {
 	
 	public List<DocDetails> getAllDoc();
 	
+	public void saveDetails(DocDetails docDetails);
+	
 	public DocDetails getDocDetails(int id);
+	
+	
+	
 }

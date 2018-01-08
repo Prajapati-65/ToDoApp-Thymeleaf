@@ -21,19 +21,19 @@ function closeNav() {
 	document.getElementById("noteContainer").style.marginLeft = "0px";
 }
 
-function deleteNote(noteId) {
-	console.log("note id is :- " + noteId)
-	$.ajax({
-		type : 'DELETE',
-		url : "delete/" + noteId
-	});
-}
+
 
 function viewTax(id) {
-	console.log("all details"+id);
+	console.log("all details -> "+id);
 	$.ajax({
 		type : 'GET',
 		url : "viewTax/" + id
+	});
+}
+function insertdetails() {
+	console.log("Insert details");
+	$.ajax({
+		url : "insertdetails"
 	});
 }
 
@@ -45,16 +45,6 @@ function saveToken() {
 	}
 }
 
-function getUrlData (urlToSend) {
-	$.ajax({
-		method : 'POST',
-		url : 'user/getUrlData',
-		headers : {
-			'url' : urlToSend,
-			'token' :  localStorage.getItem('token')
-		}
-	});
-}
 
 function fbAsyncSocialShare(note) {
 	FB.init({

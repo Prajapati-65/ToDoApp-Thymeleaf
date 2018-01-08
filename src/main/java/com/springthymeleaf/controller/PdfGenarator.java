@@ -25,6 +25,19 @@ public class PdfGenarator {
 	@Autowired
 	private static TemplateEngine templateEngine;
 	
+	@RequestMapping(value="/doc")
+	public void docDetails()
+	{
+		Map<String,String> data = new HashMap<String,String>();
+		data.put("name","Bridgelabz");
+		try {
+			PdfGenarator.createPdf("doc", data);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+	}
+	
 	public static void createPdf(String templateName, Map map) throws Exception {
 		Assert.notNull(templateName, "The templateName can not be null");
 		Context ctx = new Context();
@@ -58,18 +71,4 @@ public class PdfGenarator {
 	            }
 	        }
 	}
-	
-	@RequestMapping(value="/doc")
-	public void docDetails()
-	{
-		Map<String,String> data = new HashMap<String,String>();
-		data.put("name","Bridgelabz");
-		try {
-			PdfGenarator.createPdf("doc", data);
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-	}
-	
 }

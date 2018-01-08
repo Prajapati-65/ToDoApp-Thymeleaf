@@ -75,6 +75,10 @@ public class NoteServiceImpl implements NoteService {
 		return noteDao.getAllDoc();
 	}
 	
+	public void saveDetails(DocDetails docDetails) {
+		noteDao.saveDetails(docDetails);
+	}
+	
 	public DocDetails getDocDetails(int id) {
 		return noteDao.getDocDetails(id);
 	}

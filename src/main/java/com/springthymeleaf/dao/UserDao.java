@@ -32,4 +32,6 @@ public interface UserDao {
 	 * @return List of users
 	 */
 	public List<User> getUserEmailId();
+	
+	
 }

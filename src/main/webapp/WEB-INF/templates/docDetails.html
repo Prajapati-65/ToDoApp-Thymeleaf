@@ -17,9 +17,9 @@
 <title>ToDo</title>
 </head>
 <body>
-	<div class="col-4">
+	<span><a th:href="${'insertdetails'}">InsertDetails</a></span>
+	<div class="col-12">
 		<table class="table">
-			
 				<thead>
 					<tr>
 						<th scope="col">DocName</th>
@@ -37,7 +37,7 @@
 						<td th:text="${doc.docAmount}"></td>
 						<td th:text="${doc.tax}"></td>
 						<td th:text="${doc.taxType}"></td>
-						<td><button type="button" th:onclick="'viewTax('+ *{doc.docId} +')'" name="submit">View</button></td>
+						<th><a th:href="${'viewTax/'+doc.docId}">View</a></th>
 					</tr>
 				</tbody>
 			
