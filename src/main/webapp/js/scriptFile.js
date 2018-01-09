@@ -21,8 +21,6 @@ function closeNav() {
 	document.getElementById("noteContainer").style.marginLeft = "0px";
 }
 
-
-
 function viewTax(id) {
 	console.log("all details -> "+id);
 	$.ajax({

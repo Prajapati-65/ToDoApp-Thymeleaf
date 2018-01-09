@@ -144,7 +144,7 @@
 												
 												<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
 													<li><a th:href="${'otherNote/3/' + note.noteId}">Delete note</a></li>
-													<li><a>Add Label</a></li>
+													<li><a data-toggle="modal" data-target="#myModal2" th:href="${'update/' + note.noteId}">update note</a></li>
 													<li><a th:href="${'copy/' + note.noteId}">Make a Copy</a></li>
 													<li><a th:onclick="'fbAsyncSocialShare(note)'">Social Share</a></li>
 												</ul>
@@ -156,6 +156,40 @@
 								</div>
 								</div>
 							</div>
+						</div>
+						
+						<div class="modal fade" id="myModal2" role="dialog">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+											<h4 class="modal-title">update note</h4>
+										</div>
+										
+										<div class="modal-body">
+										
+											<form action="#" th:action="@{/update}" th:object="${note}" method="post" role="form">
+												
+												<table style="width:100%">
+													  
+													  <tr> 
+													  	<td>Title : </td>
+													    <td><input type="text" th:field="*{title}" /></td>
+													 </tr>
+													 
+													   <tr>     
+													    <td>Description : </td>  
+													    <td><input type="text" th:text="${note.description}" th:field="*{description}" /></td> 
+													   </tr> 
+												</table>
+												<input type="submit"  th:value="submit" />
+												
+											</form>
+											
+											
+										</div>
+									</div>
+								</div>
 						</div>
 
 </body>

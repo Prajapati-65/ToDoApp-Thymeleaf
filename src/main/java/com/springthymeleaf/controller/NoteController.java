@@ -119,13 +119,13 @@ public class NoteController {
 		User user = userService.getUserById(userId);
 		
 		ModelAndView modelAndView = new ModelAndView("redirect:/user/home");
-		/*	
-		Note noteById = noteService.getNoteById(note.getNoteId());
+			
+		/*Note noteById = noteService.getNoteById(note.getNoteId());
 		Date createDate = noteById.getCreatedDate();
 		note.setCreatedDate(createDate);
 		Date modifiedDate = new Date();
-		note.setModifiedDate(modifiedDate);
-		*/
+		note.setModifiedDate(modifiedDate);*/
+		
 		note.setUser(user);
 		
 		boolean isUpdated = noteService.updateNote(note);

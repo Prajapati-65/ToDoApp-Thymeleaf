@@ -51,14 +51,13 @@ public class DocController {
 		return modelAndView;
 	}
 	
+	
 	@RequestMapping(value="/viewTax/{id}", method = RequestMethod.GET)
 	public ModelAndView viewTax(@PathVariable("id") int id ,HttpServletRequest request) {
-		
 		DocDetails docDetails =  new DocDetails();
 		docDetails.setDocId(id);
 		DocDetails taxDetailsById = noteService.getDocDetails(docDetails.getDocId());
 		ModelAndView modelAndView = new ModelAndView();
-	
 		modelAndView.addObject("docName", taxDetailsById.getDocName());
 		modelAndView.addObject("docType", taxDetailsById.getDocType());
 		modelAndView.addObject("docAmount", taxDetailsById.getDocAmount());
