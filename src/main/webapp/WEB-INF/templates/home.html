@@ -124,12 +124,9 @@
 							 					<img th:src="@{/image/colorpallete.svg}" height="20px" /> 
 											</span>
 											
-											<span class="btn" data-toggle="modal" data-target="#myModal"> 
-							 					<img th:src="@{/image/image.svg}" height="18px"/> 
+											<span class="btn" >
+							 					<img th:href="${'image'}" th:src="@{/image/image.svg}" height="18px"/>
 											</span>
-											
-											
-											
 											
 											<span class="btn">
 												<a th:href="${'otherNote/1/' + note.noteId}">

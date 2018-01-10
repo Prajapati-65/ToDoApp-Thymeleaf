@@ -35,6 +35,13 @@ function insertdetails() {
 	});
 }
 
+function uploadImg() {
+	console.log("image upload");
+	$.ajax({
+		url : "image"
+	});
+}
+
 function saveToken() {
 	var token = $('#jwt').val();
 	console.log(token);
